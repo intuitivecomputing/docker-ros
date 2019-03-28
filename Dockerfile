@@ -1,6 +1,6 @@
-FROM ros:kinetic
+FROM ros:kinetic-ros-base
 
-LABEL maintainer="iory ab.ioryz@gmail.com"
+LABEL maintainer="Yuxiang Gao ygao73@jhu.edu.com"
 
 ENV ROS_DISTRO kinetic
 
@@ -16,7 +16,7 @@ ros-${ROS_DISTRO}-image-transport && \
 rm -rf /var/lib/apt/lists/*
 
 
-ENV LIBREALSENSE_VERSION 2.17.1
+ENV LIBREALSENSE_VERSION 2.19.2
 RUN wget https://github.com/IntelRealSense/librealsense/archive/v${LIBREALSENSE_VERSION}.tar.gz
 RUN tar xvzf v${LIBREALSENSE_VERSION}.tar.gz
 RUN mkdir -p librealsense-${LIBREALSENSE_VERSION}/build

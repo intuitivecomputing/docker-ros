@@ -1,31 +1,34 @@
 version: '2'
+networks:
+  ros:
+    driver: bridge
 
 services:
-  master:
-    build: docker
-    network: host
+  ros-master:
+    image: ros:ros-kinetic-base
+    container_name: ros-master
+    networks:
+      - ros
     privileged: true
     volumes:
       -/dev:/dev
-    container_name: master
     command:
       - roscore
-    restart: always
   
   realsense:
     build: docker
-    network:host
+    container_name: realsense
     privileged: true
+    networks:
+      - ros
     depends_on:
-      - master
+      - ros-master
+    environment:
+      - "ROS_MASTER_URI=http://ros-master:11311"
+      - "ROS_HOSTNAME=realsense"
     volumes:
       -/dev:/dev
-    container_name: realsense
-    environment:
-      - "ROS_HOSTNAME=realsense"
-      - "ROS_MASTER_URI=http://master:11311"
-    command: 
-      - roslaunch realsense2_camera rs_rgbd.launch
+    command: roslaunch realsense2_camera rs_rgbd.launch
       # enable_pointcloud:=true \
       # align_depth:=false \
       # depth_registered_processing:=true \

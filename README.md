@@ -19,20 +19,60 @@ $ sudo /etc/init.d/dphys-swapfile restart swapon -s
 ```
 
 3. [Use docker without sudo](https://askubuntu.com/questions/477551/how-can-i-use-docker-without-sudo)
+
+4. [Fix broken docker-compose](https://www.tomhanoldt.info/blog/dev/docker/docker-on-raspberry-with-gui/)
+As docker-compose makes things more reproducable but is broken in the actual hypriot image, we will fix this by typing this in to the raspberry terminal:
+```
+sudo easy_install --upgrade pip
+sudo pip uninstall docker docker-compose -y
+ 
+sudo pip install docker==2.3.0
+sudo pip install docker-compose==1.14.0
+```
 ## Usage
 ### Build the container
 ```docker build -t yuxianggao/docker-ros-realsense:raspi-d435i ./docker```
 ### Using stand-alone container
 ```
-docker run --it --rm \
-    --net host \
+docker network create ros-net
+
+docker run -it --rm \
+    --net=ros-net \
+    --privileged \
+    -p 11311:11311 \
+    --volume /dev:/dev \
+    --name ros-master \
+    ros:kinetic-ros-base \
+    roscore
+
+docker run -it --rm \
+    --net=ros-net \
     --privileged \
     --volume /dev:/dev \
-    --env ROS_MASTER_URI=http://master:11311 \
+    --name realsense \
+    --env ROS_HOSTNAME=realsense \
+    --env ROS_MASTER_URI=http://ros-master:11311 \
     yuxianggao/docker-ros-realsense:raspi-d435i \
     roslaunch realsense2_camera rs_rgbd.launch
 ```
+Use host's network
+```
+docker run -it --rm \
+    --net=host \
+    --privileged \
+    --volume /dev:/dev \
+    --name ros-master \
+    ros:kinetic-ros-base \
+    roscore
 
+docker run -it --rm \
+    --net=host \
+    --privileged \
+    --volume /dev:/dev \
+    --name realsense \
+    yuxianggao/docker-ros-realsense:raspi-d435i \
+    roslaunch realsense2_camera rs_rgbd.launch
+```
 ### Using Docker Compose
 1. Bring up the containers:
 `docker-compose up -d`

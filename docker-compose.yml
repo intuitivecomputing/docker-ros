@@ -2,7 +2,7 @@ version: '2'
 
 services:
   master:
-    build: .
+    build: docker
     network: host
     privileged: true
     volumes:
@@ -13,7 +13,7 @@ services:
     restart: always
   
   realsense:
-    build: .
+    build: docker
     network:host
     privileged: true
     depends_on:

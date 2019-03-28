@@ -20,14 +20,16 @@ $ sudo /etc/init.d/dphys-swapfile restart swapon -s
 
 3. [Use docker without sudo](https://askubuntu.com/questions/477551/how-can-i-use-docker-without-sudo)
 ## Usage
+### Build the container
+```docker build -t yuxianggao/docker-ros-realsense:raspi-d435i ./docker```
 ### Using stand-alone container
 ```
-docker run --it --rm
-    --net host 
-    --privileged 
-    --volume=/dev:/dev 
-    yuxianggao/docker-ros-realsense
+docker run --it --rm \
+    --net host \
+    --privileged \
+    --volume /dev:/dev \
     --env ROS_MASTER_URI=http://master:11311 \
+    yuxianggao/docker-ros-realsense:raspi-d435i \
     roslaunch realsense2_camera rs_rgbd.launch
 ```
 

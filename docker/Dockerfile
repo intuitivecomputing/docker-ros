@@ -9,7 +9,7 @@ DEBIAN_FRONTEND=noninteractive apt install -y \
 wget \
 python-rosinstall \
 python-catkin-tools \
-ros-${ROS_DISTRO}-jsk-tools \
+# ros-${ROS_DISTRO}-jsk-tools \
 ros-${ROS_DISTRO}-rgbd-launch \
 ros-${ROS_DISTRO}-image-transport-plugins \
 ros-${ROS_DISTRO}-image-transport && \
@@ -39,8 +39,8 @@ RUN source /opt/ros/${ROS_DISTRO}/setup.bash; cd catkin_ws; catkin build
 RUN rm /bin/sh && mv /bin/sh_tmp /bin/sh
 RUN touch /root/.bashrc && \
     echo "source /catkin_ws/devel/setup.bash\n" >> /root/.bashrc && \
-    echo "rossetip\n" >> /root/.bashrc && \
-    echo "rossetmaster localhost"
+    # echo "rossetip\n" >> /root/.bashrc && \
+    # echo "rossetmaster localhost"
 
 COPY ./ros_entrypoint.sh /
 ENTRYPOINT ["/ros_entrypoint.sh"]

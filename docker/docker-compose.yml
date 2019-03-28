@@ -1,0 +1,33 @@
+version: '2'
+
+services:
+  master:
+    build: .
+    network: host
+    privileged: true
+    volumes:
+      -/dev:/dev
+    container_name: master
+    command:
+      - roscore
+    restart: always
+  
+  realsense:
+    build: .
+    network:host
+    privileged: true
+    depends_on:
+      - master
+    volumes:
+      -/dev:/dev
+    container_name: realsense
+    environment:
+      - "ROS_HOSTNAME=realsense"
+      - "ROS_MASTER_URI=http://master:11311"
+    command: 
+      - roslaunch realsense2_camera rs_rgbd.launch
+      # enable_pointcloud:=true \
+      # align_depth:=false \
+      # depth_registered_processing:=true \
+      # align_depth:=true
+    restart: always

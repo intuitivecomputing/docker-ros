@@ -36,11 +36,12 @@ RUN mkdir -p /catkin_ws/src && cd /catkin_ws/src && \
 RUN cd catkin_ws; rosdep install -r -y --from-paths src --ignore-src
 RUN mv /bin/sh /bin/sh_tmp && ln -s /bin/bash /bin/sh
 RUN source /opt/ros/${ROS_DISTRO}/setup.bash; cd catkin_ws; catkin build
-RUN rm /bin/sh && mv /bin/sh_tmp /bin/sh
+RUN machine_ip=(`hostname -I`)  
 RUN touch /root/.bashrc && \
-    echo "source /catkin_ws/devel/setup.bash\n" >> /root/.bashrc
-    # echo "rossetip\n" >> /root/.bashrc && \
-    # echo "rossetmaster localhost"
+    echo "source /catkin_ws/devel/setup.bash" >> /root/.bashrc &&\
+    echo "export ROS_IP=${machine_ip[0]}" >> /root/.bashrc && \
+    echo "export ROS_MASTER_URI=http://localhost:11311" >> /root/.bashrc
+RUN rm /bin/sh && mv /bin/sh_tmp /bin/sh 
 
 COPY ./ros_entrypoint.sh /
 ENTRYPOINT ["/ros_entrypoint.sh"]

@@ -25,9 +25,10 @@ As docker-compose makes things more reproducable but is broken in the actual hyp
 ```
 sudo easy_install --upgrade pip
 sudo pip uninstall docker docker-compose -y
- 
-sudo pip install docker==2.3.0
-sudo pip install docker-compose==1.14.0
+
+sudo pip install requests==2.20.1
+sudo pip install docker==3.7.2
+sudo pip install docker-compose==1.23.0
 ```
 ## Usage
 ### Build the container
@@ -61,17 +62,9 @@ docker run -it --rm \
     --net=host \
     --privileged \
     --volume /dev:/dev \
-    --name ros-master \
-    ros:kinetic-ros-base \
-    roscore
-
-docker run -it --rm \
-    --net=host \
-    --privileged \
-    --volume /dev:/dev \
     --name realsense \
     yuxianggao/docker-ros-realsense:raspi-d435i \
-    roslaunch realsense2_camera rs_rgbd.launch
+    roslaunch realsense2_camera rs_rgbd.launch initial_reset:=true
 ```
 ### Using Docker Compose
 1. Bring up the containers:

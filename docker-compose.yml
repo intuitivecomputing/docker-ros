@@ -1,28 +1,29 @@
-version: '3'
+version: '3.3'
 
 services:
-  #ros-master:
-   # build: docker
-   # container_name: ros-master
-   # network_mode: host
-   # privileged: true
-   # volumes:
-   #   - /dev:/dev
-   # command:
-    #  - roscore
+  ros-master:
+    # build: docker
+    image: ros:kinect-ros-core
+    container_name: ros-master
+    network_mode: "host"
+     privileged: true
+    volumes:
+      - /dev:/dev
+    command:
+      - roscore
+    environment:
+      ROS_IP: 192.168.1.113
+      ROS_MASTER_URI: http://192.168.1.113:11311
+    restart: always
   
   realsense:
     build: docker
     container_name: realsense
     privileged: true
     network_mode: host
-    #depends_on:
-    #  - ros-master
+    depends_on:
+     - ros-master
     volumes:
       - /dev:/dev
     command: roslaunch realsense2_camera rs_rgbd.launch initial_reset:=true
-      # enable_pointcloud:=true \
-      # align_depth:=false \
-      # depth_registered_processing:=true \
-      # align_depth:=true
-    # restart: always
+    restart: unless-stopped

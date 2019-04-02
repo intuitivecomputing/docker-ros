@@ -35,26 +35,12 @@ sudo pip install docker-compose==1.23.0
 ```docker build -t yuxianggao/docker-ros-realsense:raspi-d435i ./docker```
 ### Using stand-alone container
 ```
-docker network create ros-net
-
-docker run -it --rm \
-    --net=ros-net \
-    --privileged \
-    -p 11311:11311 \
-    --volume /dev:/dev \
-    --name ros-master \
-    ros:kinetic-ros-base \
-    roscore
-
-docker run -it --rm \
-    --net=ros-net \
-    --privileged \
-    --volume /dev:/dev \
-    --name realsense \
-    --env ROS_HOSTNAME=realsense \
-    --env ROS_MASTER_URI=http://ros-master:11311 \
-    yuxianggao/docker-ros-realsense:raspi-d435i \
-    roslaunch realsense2_camera rs_rgbd.launch
+docker run -ti --rm \
+    -e DISPLAY=$DISPLAY \
+    -v /tmp/.X11-unix:/tmp/.X11-unix \
+    -v $HOME/.Xauthority:$HOME/.Xauthority \
+    -net=host \
+    ros:x11
 ```
 Use host's network
 ```

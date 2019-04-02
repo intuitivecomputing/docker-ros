@@ -1,4 +1,4 @@
-FROM ros:kinetic-ros-base
+FROM ros:kinetic
 
 LABEL maintainer="Yuxiang Gao ygao73@jhu.edu.com"
 

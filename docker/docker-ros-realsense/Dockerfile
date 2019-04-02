@@ -1,9 +1,10 @@
-FROM ros:kinetic
+ARG ROS_DISTRO=kinetic
+FROM ros:${ROS_DISTRO}
 
 LABEL maintainer="Yuxiang Gao ygao73@jhu.edu.com"
 
-ENV ROS_DISTRO kinetic
-ENV LIBREALSENSE_VERSION 2.19.2
+ARG ROS_DISTRO
+ARG LIBREALSENSE_VERSION=2.19.2
 
 RUN apt update && \
 DEBIAN_FRONTEND=noninteractive apt install -y \
@@ -35,8 +36,8 @@ RUN mkdir -p /catkin_ws/src && cd /catkin_ws/src && \
 RUN cd catkin_ws; rosdep install -r -y --from-paths src --ignore-src
 RUN mv /bin/sh /bin/sh_tmp && ln -s /bin/bash /bin/sh
 RUN source /opt/ros/${ROS_DISTRO}/setup.bash; cd catkin_ws; catkin build
-RUN rm /bin/sh && mv /bin/sh_tmp /bin/sh 
-# RUN machine_ip=(`hostname -I`)  
+RUN rm /bin/sh && mv /bin/sh_tmp /bin/sh
+# RUN machine_ip=(`hostname -I`)
 RUN touch /root/.bashrc && \
     echo "source /catkin_ws/devel/setup.bash" >> /root/.bashrc
     # echo "export ROS_IP=${machine_ip[0]}" >> /root/.bashrc && \

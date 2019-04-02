@@ -34,15 +34,7 @@ sudo pip install docker-compose==1.23.0
 ### Build the container
 ```docker build -t yuxianggao/docker-ros-realsense:raspi-d435i ./docker```
 ### Using stand-alone container
-```
-docker run -ti --rm \
-    -e DISPLAY=$DISPLAY \
-    -v /tmp/.X11-unix:/tmp/.X11-unix \
-    -v $HOME/.Xauthority:$HOME/.Xauthority \
-    -net=host \
-    ros:x11
-```
-Use host's network
+#### Use host's network
 ```
 docker run -it --rm \
     --net=host \
@@ -51,6 +43,18 @@ docker run -it --rm \
     --name realsense \
     yuxianggao/docker-ros-realsense:raspi-d435i \
     roslaunch realsense2_camera rs_rgbd.launch initial_reset:=true
+```
+
+#### Using GUI from docker
+```
+xhost +local:root
+
+docker run -it --rm \
+    -e DISPLAY=$DISPLAY \
+    -v /tmp/.X11-unix:/tmp/.X11-unix \
+    -v $HOME/.Xauthority:$HOME/.Xauthority \
+    --net=host \
+    ros:x11
 ```
 ### Using Docker Compose
 1. Bring up the containers:

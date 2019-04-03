@@ -32,10 +32,10 @@ sudo pip install docker-compose==1.23.0
 ```
 ## Usage
 ### Build the container
-```docker build -t yuxianggao/docker-ros-realsense:raspi-d435i ./docker```
+```./build.sh ros-realsense```
 ### Using stand-alone container
 #### Use host's network
-```
+<!-- ```
 docker run -it --rm \
     --net=host \
     --privileged \
@@ -43,7 +43,8 @@ docker run -it --rm \
     --name realsense \
     yuxianggao/docker-ros-realsense:raspi-d435i \
     roslaunch realsense2_camera rs_rgbd.launch initial_reset:=true
-```
+``` -->
+`./run_docker.sh ros-realsense ros-realsense 1 "roslaunch realsense2_camera rs_rgbd.launch initial_reset:=true"`
 
 #### Using GUI from docker
 ```

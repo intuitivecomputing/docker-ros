@@ -1,7 +1,7 @@
-#!/bin/sh
+#!/bin/bash
 ARCH=$(dpkg --print-architecture)
 echo $ARCH
-cd $1
+cd "docker-$1"
 docker build  -t yuxianggao/$1:$ARCH .
 docker push yuxianggao/$1:$ARCH
-manifest-tool push from-spec manifest.yaml
+# docker run --rm weshigbee/manifest-tool push from-spec manifest.yaml

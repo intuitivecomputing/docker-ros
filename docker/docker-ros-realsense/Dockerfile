@@ -8,9 +8,11 @@ ARG LIBREALSENSE_VERSION=2.19.2
 
 RUN apt update && \
 DEBIAN_FRONTEND=noninteractive apt install -y \
+x11-apps \
 wget \
 python-rosinstall \
 python-catkin-tools \
+ros-${ROS_DISTRO}-rviz \
 ros-${ROS_DISTRO}-rgbd-launch \
 ros-${ROS_DISTRO}-image-transport-plugins \
 ros-${ROS_DISTRO}-image-transport && \

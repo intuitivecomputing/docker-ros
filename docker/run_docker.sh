@@ -1,7 +1,7 @@
 #!/bin/bash
 ARCH=$(dpkg --print-architecture)
 echo $ARCH
-echo "Usage [container name] [docker name] [display]"
+echo "Usage [container name] [docker name] [display] [CMD]"
 if [[ ${3:-0} = 0 ]]; then
   docker run -it --rm \
     --net=host \
@@ -21,5 +21,5 @@ else
     --name $1 \
     --volume /dev:/dev \
     yuxianggao/$2:$ARCH \
-    bash
+    /bin/bash -c "$4"
 fi

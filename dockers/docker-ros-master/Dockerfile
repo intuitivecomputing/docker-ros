@@ -1,8 +1,12 @@
+ARG ROS_DISTRO=kinetic
 FROM osrf/ros:kinetic-desktop-full
+ARG ROS_DISTRO
+LABEL maintainer="Yuxiang Gao ygao73@jhu.edu.com"
 
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -qqy x11-apps \
+    tmux \
     wget \
     python-rosinstall \
     python-catkin-tools && \
@@ -10,15 +14,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/
 ENV DISPLAY :0
 
-RUN mkdir -p /catkin_ws/src
-RUN mv /bin/sh /bin/sh_tmp && ln -s /bin/bash /bin/sh
-RUN source /opt/ros/${ROS_DISTRO}/setup.bash; cd catkin_ws; catkin build
-RUN rm /bin/sh && mv /bin/sh_tmp /bin/sh
-
-RUN touch /root/.bashrc && \
-    echo "source /catkin_ws/devel/setup.bash" >> /root/.bashrc
-
 COPY ./ros_entrypoint.sh /
 ENTRYPOINT ["/ros_entrypoint.sh"]
 
-CMD ["bash"]
+CMD ["roscore"]

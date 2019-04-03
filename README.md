@@ -1,10 +1,4 @@
-# Docker for d415/d435 using ROS
-Dockerized ROS environment with Realsense support.
-
-
-## Credits
-This project is inspired by [docker-ros-d415](https://github.com/iory/docker-ros-d415) and [ROS Docker Tutorials](https://docs.docker.com/samples/library/ros/).
-
+# Dockers for ROS
 ## Prerequisites 
 1. Install Docker Engine and Docker Compose
 2. If you are running this on a Raspberry Pi, you need to [add swap](https://github.com/IntelRealSense/librealsense/blob/master/doc/installation_raspbian.md) for building `librealsense`:
@@ -30,9 +24,46 @@ sudo pip install requests==2.20.1
 sudo pip install docker==3.7.2
 sudo pip install docker-compose==1.23.0
 ```
-## Usage
-### Build the container
-```./build.sh ros-realsense```
+5. We use `Fabric` to streamline build and development, to install `Fabric`:
+```
+pip install Fabric3
+# er
+sudo apt install fabric
+```
+
+## Conventions
+The directory should look like this
+```
+.
++-- docker-compose.yml
++-- dockers
+|   +-- docker-ros-{name1}
+|   |   +-- Dockerfile
+|   |   +-- ...
+|   +-- docker-ros-{name2}
+|   |   +-- Dockerfile
+|   |   +-- ...
++-- packages
+|   +-- package1
+|   +-- package2
+```
+All dockers should reside in the `dockers` folder, and the packages should be cloned into the `packages` folder as submodules and mounted to the containers.
+
+## Basic Usage
+### Build the container wit the following command
+```
+fab docker_build:{docker-name}
+fab docker_start:{docker-name}
+```
+
+## docker-ros-realsense 
+Docker for d415/d435 using ROS
+Dockerized ROS environment with Realsense support.
+
+
+### Credits
+This project is inspired by [docker-ros-d415](https://github.com/iory/docker-ros-d415) and [ROS Docker Tutorials](https://docs.docker.com/samples/library/ros/).
+
 ### Using stand-alone container
 #### Use host's network
 <!-- ```

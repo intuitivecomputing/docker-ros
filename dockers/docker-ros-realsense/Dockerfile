@@ -9,6 +9,7 @@ ARG LIBREALSENSE_VERSION=2.19.2
 RUN apt update && \
 DEBIAN_FRONTEND=noninteractive apt install -y \
 x11-apps \
+tmux \
 wget \
 python-rosinstall \
 python-catkin-tools \
@@ -24,6 +25,7 @@ RUN tar xvzf v${LIBREALSENSE_VERSION}.tar.gz
 RUN mkdir -p librealsense-${LIBREALSENSE_VERSION}/build
 RUN apt update && \
     apt install -y \
+        tmux \
         libusb-1.0-0 \
         libusb-1.0-0-dev \
         freeglut3-dev \
@@ -40,10 +42,10 @@ RUN mv /bin/sh /bin/sh_tmp && ln -s /bin/bash /bin/sh
 RUN source /opt/ros/${ROS_DISTRO}/setup.bash; cd catkin_ws; catkin build
 RUN rm /bin/sh && mv /bin/sh_tmp /bin/sh
 # RUN machine_ip=(`hostname -I`)
-RUN touch /root/.bashrc && \
-    echo "source /catkin_ws/devel/setup.bash" >> /root/.bashrc
-    # echo "export ROS_IP=${machine_ip[0]}" >> /root/.bashrc && \
-    # echo "export ROS_MASTER_URI=http://localhost:11311" >> /root/.bashrc
+RUN /bin/bash -c "touch /root/.bashrc" && \
+    /bin/bash -c 'echo "export ROS_IP=${machine_ip[0]}" >> /root/.bashrc' && \
+    /bin/bash -c 'echo "export ROS_MASTER_URI=http://localhost:11311" >> /root/.bashrc' && \
+    /bin/bash -c 'echo "source ~/catkin_ws/devel/setup.bash" >> /root/.bashrc'
 
 
 COPY ./ros_entrypoint.sh /

@@ -1,10 +1,4 @@
-# Docker for d415/d435 using ROS
-Dockerized ROS environment with Realsense support.
-
-
-## Credits
-This project is inspired by [docker-ros-d415](https://github.com/iory/docker-ros-d415) and [ROS Docker Tutorials](https://docs.docker.com/samples/library/ros/).
-
+# Dockers for ROS
 ## Prerequisites 
 1. Install Docker Engine and Docker Compose
 2. If you are running this on a Raspberry Pi, you need to [add swap](https://github.com/IntelRealSense/librealsense/blob/master/doc/installation_raspbian.md) for building `librealsense`:
@@ -30,34 +24,49 @@ sudo pip install requests==2.20.1
 sudo pip install docker==3.7.2
 sudo pip install docker-compose==1.23.0
 ```
-## Usage
-### Build the container
-```docker build -t yuxianggao/docker-ros-realsense:raspi-d435i ./docker```
+5. We use `Fabric` to streamline build and development, to install `Fabric`:
+```
+pip install Fabric3
+# er
+sudo apt install fabric
+```
+
+## Conventions
+The directory should look like this
+```
+.
++-- docker-compose.yml
++-- dockers
+|   +-- docker-ros-{name1}
+|   |   +-- Dockerfile
+|   |   +-- ...
+|   +-- docker-ros-{name2}
+|   |   +-- Dockerfile
+|   |   +-- ...
++-- packages
+|   +-- package1
+|   +-- package2
+```
+All dockers should reside in the `dockers` folder, and the packages should be cloned into the `packages` folder as submodules and mounted to the containers.
+
+## Basic Usage
+### Build the container wit the following command
+```
+fab docker_build:{docker-name}
+fab docker_start:{docker-name}
+```
+
+## docker-ros-realsense 
+Docker for d415/d435 using ROS
+Dockerized ROS environment with Realsense support.
+
+
+### Credits
+This project is inspired by [docker-ros-d415](https://github.com/iory/docker-ros-d415) and [ROS Docker Tutorials](https://docs.docker.com/samples/library/ros/).
+
 ### Using stand-alone container
-```
-docker network create ros-net
-
-docker run -it --rm \
-    --net=ros-net \
-    --privileged \
-    -p 11311:11311 \
-    --volume /dev:/dev \
-    --name ros-master \
-    ros:kinetic-ros-base \
-    roscore
-
-docker run -it --rm \
-    --net=ros-net \
-    --privileged \
-    --volume /dev:/dev \
-    --name realsense \
-    --env ROS_HOSTNAME=realsense \
-    --env ROS_MASTER_URI=http://ros-master:11311 \
-    yuxianggao/docker-ros-realsense:raspi-d435i \
-    roslaunch realsense2_camera rs_rgbd.launch
-```
-Use host's network
-```
+#### Use host's network
+<!-- ```
 docker run -it --rm \
     --net=host \
     --privileged \
@@ -65,6 +74,19 @@ docker run -it --rm \
     --name realsense \
     yuxianggao/docker-ros-realsense:raspi-d435i \
     roslaunch realsense2_camera rs_rgbd.launch initial_reset:=true
+``` -->
+`./run_docker.sh ros-realsense ros-realsense 1 "roslaunch realsense2_camera rs_rgbd.launch initial_reset:=true"`
+
+#### Using GUI from docker
+```
+xhost +local:root
+
+docker run -it --rm \
+    -e DISPLAY=$DISPLAY \
+    -v /tmp/.X11-unix:/tmp/.X11-unix \
+    -v $HOME/.Xauthority:$HOME/.Xauthority \
+    --net=host \
+    ros:x11
 ```
 ### Using Docker Compose
 1. Bring up the containers:

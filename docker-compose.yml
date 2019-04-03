@@ -1,29 +1,44 @@
-version: '3.3'
+version: '3.7'
 
 services:
-  ros-master:
-    # build: docker
-    image: ros:kinect-ros-core
-    container_name: ros-master
-    network_mode: "host"
-     privileged: true
-    volumes:
-      - /dev:/dev
-    command:
-      - roscore
-    environment:
-      ROS_IP: 192.168.1.113
-      ROS_MASTER_URI: http://192.168.1.113:11311
-    restart: always
-  
-  realsense:
-    build: docker
-    container_name: realsense
+  # ros-master:
+  #   image: yuxianggao/ros-master
+  #   build:
+  #     context: dockers/docker-ros-master
+  #   container_name: ros-master
+  #   network_mode: "host"
+  #   privileged: true
+  #   restart: always
+
+  ros-realsense:
+    image: yuxianggao/ros-realsense
+    build:
+      context: dockers/docker-ros-realsense
+    container_name: ros-realsense
     privileged: true
-    network_mode: host
-    depends_on:
-     - ros-master
+    network_mode: "host"
+    # depends_on:
+    #  - ros-master
     volumes:
       - /dev:/dev
-    command: roslaunch realsense2_camera rs_rgbd.launch initial_reset:=true
+    command: /bin/bash -c "roslaunch realsense2_camera rs_rgbd.launch initial_reset:=true"
     restart: unless-stopped
+
+  ros-gui:
+    image: yuxianggao/ros-gui
+    build:
+      context: dockers/docker-ros-gui
+    container_name: ros-gui
+    network_mode: "host"
+    privileged: true
+    environment:
+      - DISPLAY=$DISPLAY
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - $HOME/.Xauthority:$HOME/.Xauthority
+    depends_on:
+      - ros-realsense
+    command: /bin/bash -c "rviz"
+    restart: unless-stopped
+
+

@@ -50,10 +50,21 @@ The directory should look like this
 All dockers should reside in the `dockers` folder, and the packages should be cloned into the `packages` folder as submodules and mounted to the containers.
 
 ## Basic Usage
-### Build the container wit the following command
+### Building
+We provide a build script for building and pushing images, usage:
 ```
-fab docker_build:{docker-name}
-fab docker_start:{docker-name}
+usage: ./build.sh image1 image2 ... imageN
+Give the images to build. If no image is given, all folders in /dockers will be built.
+Arguments:
+  -h|--help: Usage
+  -d|--dir: dockers directory. Default: dockers
+  -r|--ros0distro: ros distibution. Default: kinetic
+
+```
+Examples:
+```
+./build.sh ros-gui ros-master #build specific images
+./build.sh #build all 
 ```
 
 ## docker-ros-realsense 

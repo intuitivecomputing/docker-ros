@@ -2,10 +2,11 @@
 
 function usage {
     echo "usage: $0 image1 image2 ... imageN"
-    echo "If no image is given, it will build all in /dockers dir."
-    echo "-h|--help: Usage"
-    echo "-d|--dir: dockers directory, default is `dockers`"
-    echo "-r|--ros0distro: ros distibution. Default is `kinetic`"
+    echo "Give the images to build. If no image is given, all folders in /dockers will be built."
+    echo "Arguments:"
+    echo "  -h|--help: Usage"
+    echo "  -d|--dir: dockers directory. Default: dockers"
+    echo "  -r|--ros0distro: ros distibution. Default: kinetic"
     exit 1
 }
 

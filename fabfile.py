@@ -3,7 +3,7 @@ from fabric.decorators import task
 from os.path import dirname, realpath, join
 from functools import wraps
 
-project_suffix = 'docker-ros-'
+project_suffix = 'ros-'
 
 # def name_assertion(func):
 #     @wraps(func)
@@ -53,7 +53,7 @@ def docker_build(project_name, options=''):
     """
 
     docker_stop(project_name)
-    local('docker build {options} -t yuxianggao/ros-{project_name}:$(dpkg --print-architecture) ./dockers/docker-ros-{project_name}'.format(options=options, project_name=project_name))
+    local('docker build {options} -t yuxianggao/ros-{project_name}:$(dpkg --print-architecture) ./dockers/ros-{project_name}'.format(options=options, project_name=project_name))
 
 
 @task

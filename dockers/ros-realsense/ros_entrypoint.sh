@@ -6,7 +6,7 @@ set -e
 # echo "export ROS_MASTER_URI=http://localhost:11311" >> /root/.bashrc
 
 # setup ros environment
-source "/opt/ros/$ROS_DISTRO/setup.bash"
+# SETUP="/opt/ros/$ROS_DISTRO/setup.bash"
 if [ -z "${SETUP}" ]; then
     source "/catkin_ws/devel/setup.bash"
 else

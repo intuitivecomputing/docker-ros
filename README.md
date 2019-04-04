@@ -62,7 +62,8 @@ Dockerized ROS environment with Realsense support.
 
 
 ### Credits
-This project is inspired by [docker-ros-d415](https://github.com/iory/docker-ros-d415) and [ROS Docker Tutorials](https://docs.docker.com/samples/library/ros/).
+This project is inspired by [docker-ros-d415](https://github.com/iory/docker-ros-d415), [gobbit project](https://github.com/frankjoshua/gobbit.git) and [ROS Docker Tutorials](https://docs.docker.com/samples/library/ros/).
+
 
 ### Using stand-alone container with gui
 ```

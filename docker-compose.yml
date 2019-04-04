@@ -1,29 +1,40 @@
 version: '3.7'
 
 services:
-  # ros-master:
-  #   image: yuxianggao/ros-master
-  #   build:
-  #     context: dockers/docker-ros-master
-  #   container_name: ros-master
-  #   network_mode: "host"
-  #   privileged: true
-  #   restart: always
+  ros-master:
+    image: yuxianggao/ros-master
+    build:
+      context: dockers/ros-master
+      args:
+        ROS_DISTRO: "kinetic"
+        ARCH: "$$(dpkg --print-architecture)"
+    container_name: ros-master
+    network_mode: "host"
+    privileged: true
+    restart: always
 
   ros-realsense:
     image: yuxianggao/ros-realsense
     build:
-      context: dockers/docker-ros-realsense
+      context: dockers/ros-realsense
+      args:
+        ROS_DISTRO: "kinetic"
+        ARCH: "$$(dpkg --print-architecture)"
     container_name: ros-realsense
     privileged: true
+    depends_on:
+      - ros-master
     network_mode: "host"
-    command: /bin/bash -c "roslaunch realsense2_camera rs_rgbd.launch initial_reset:=true"
+    command: /bin/bash -c "roslaunch --wait realsense2_camera rs_rgbd.launch initial_reset:=true"
     restart: unless-stopped
 
   ros-gui:
     image: yuxianggao/ros-gui
     build:
-      context: dockers/docker-ros-gui
+      context: dockers/ros-gui
+      args:
+        ROS_DISTRO: "kinetic"
+        ARCH: "$$(dpkg --print-architecture)"
     container_name: ros-gui
     network_mode: "host"
     privileged: true

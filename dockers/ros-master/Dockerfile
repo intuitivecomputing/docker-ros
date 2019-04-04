@@ -1,12 +1,17 @@
-ARG ROS_DISTRO=kinetic
-FROM osrf/ros:kinetic-desktop-full
 ARG ROS_DISTRO
+FROM ros:${ROS_DISTRO}-ros-core
+ARG ROS_DISTRO
+
 LABEL maintainer="Yuxiang Gao ygao73@jhu.edu.com"
 
+ENV DEBIAN_FRONTEND=noninteractive
+
 RUN apt-get update && \
-    apt-get install -qqy x11-apps \
+    apt-get install -qqy \
     tmux \
     wget \
+    git \
+    vim \
     python-rosinstall \
     python-catkin-tools && \
     apt-get upgrade -y && \

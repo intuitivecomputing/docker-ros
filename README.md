@@ -27,7 +27,7 @@ sudo pip install docker-compose==1.23.0
 5. We use `Fabric` to streamline build and development, to install `Fabric`:
 ```
 pip install Fabric3
-# er
+#or
 sudo apt install fabric
 ```
 
@@ -64,20 +64,7 @@ Dockerized ROS environment with Realsense support.
 ### Credits
 This project is inspired by [docker-ros-d415](https://github.com/iory/docker-ros-d415) and [ROS Docker Tutorials](https://docs.docker.com/samples/library/ros/).
 
-### Using stand-alone container
-#### Use host's network
-<!-- ```
-docker run -it --rm \
-    --net=host \
-    --privileged \
-    --volume /dev:/dev \
-    --name realsense \
-    yuxianggao/docker-ros-realsense:raspi-d435i \
-    roslaunch realsense2_camera rs_rgbd.launch initial_reset:=true
-``` -->
-`./run_docker.sh ros-realsense ros-realsense 1 "roslaunch realsense2_camera rs_rgbd.launch initial_reset:=true"`
-
-#### Using GUI from docker
+### Using stand-alone container with gui
 ```
 xhost +local:root
 
@@ -86,7 +73,8 @@ docker run -it --rm \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
     -v $HOME/.Xauthority:$HOME/.Xauthority \
     --net=host \
-    ros:x11
+    yuxiang-gao/ros-gui \
+    /bin/bash
 ```
 ### Using Docker Compose
 1. Bring up the containers:

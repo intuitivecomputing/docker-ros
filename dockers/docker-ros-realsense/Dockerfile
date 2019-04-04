@@ -25,7 +25,6 @@ RUN tar xvzf v${LIBREALSENSE_VERSION}.tar.gz
 RUN mkdir -p librealsense-${LIBREALSENSE_VERSION}/build
 RUN apt update && \
     apt install -y \
-        tmux \
         libusb-1.0-0 \
         libusb-1.0-0-dev \
         freeglut3-dev \
@@ -46,7 +45,7 @@ RUN /bin/bash -c "touch /root/.bashrc" && \
     /bin/bash -c 'echo "export ROS_IP=${machine_ip[0]}" >> /root/.bashrc' && \
     /bin/bash -c 'echo "export ROS_MASTER_URI=http://localhost:11311" >> /root/.bashrc' && \
     /bin/bash -c 'echo "source ~/catkin_ws/devel/setup.bash" >> /root/.bashrc'
-
+VOLUME [ "/dev" ]
 
 COPY ./ros_entrypoint.sh /
 ENTRYPOINT ["/ros_entrypoint.sh"]

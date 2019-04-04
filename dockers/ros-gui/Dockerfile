@@ -22,7 +22,6 @@ RUN apt update && \
     ros-${ROS_DISTRO}-image-transport && \
     rm -rf /var/lib/apt/lists/*
 
-RUN /bin/bash -c 'echo "$ARCH"'
 COPY ./ros_entrypoint.sh /
 ENTRYPOINT ["/ros_entrypoint.sh"]
 CMD ["/bin/bash"]

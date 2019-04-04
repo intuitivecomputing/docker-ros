@@ -2,24 +2,24 @@ version: '3.7'
 
 services:
   ros-master:
-    image: yuxianggao/ros-master
+    image: yuxianggao/ros-master:${DOCKER_ROS_DISTRO}-${DOCKER_ARCH}
     build:
       context: dockers/ros-master
       args:
-        ROS_DISTRO: "kinetic"
-        ARCH: "$$(dpkg --print-architecture)"
+        ROS_DISTRO: "$DOCKER_ROS_DISTRO"
+        ARCH: "$DOCKER_ARCH"
     container_name: ros-master
     network_mode: "host"
     privileged: true
     restart: always
 
   ros-realsense:
-    image: yuxianggao/ros-realsense
+    image: yuxianggao/ros-realsense:${DOCKER_ROS_DISTRO}-${DOCKER_ARCH}
     build:
       context: dockers/ros-realsense
       args:
-        ROS_DISTRO: "kinetic"
-        ARCH: "$$(dpkg --print-architecture)"
+        ROS_DISTRO: "$DOCKER_ROS_DISTRO"
+        ARCH: "$DOCKER_ARCH"
     container_name: ros-realsense
     privileged: true
     depends_on:
@@ -29,12 +29,12 @@ services:
     restart: unless-stopped
 
   ros-gui:
-    image: yuxianggao/ros-gui
+    image: yuxianggao/ros-gui:${DOCKER_ROS_DISTRO}-${DOCKER_ARCH}
     build:
       context: dockers/ros-gui
       args:
-        ROS_DISTRO: "kinetic"
-        ARCH: "$$(dpkg --print-architecture)"
+        ROS_DISTRO: "$DOCKER_ROS_DISTRO"
+        ARCH: "$DOCKER_ARCH"
     container_name: ros-gui
     network_mode: "host"
     privileged: true
@@ -43,4 +43,17 @@ services:
     command: /bin/bash -c "rviz"
     restart: unless-stopped
 
-
+  ros-dnn:
+    image: yuxianggao/ros-dnn:${DOCKER_ROS_DISTRO}-${DOCKER_ARCH}
+    build:
+      context: dockers/ros-dnn
+      args:
+        ROS_DISTRO: "$DOCKER_ROS_DISTRO"
+        ARCH: "$DOCKER_ARCH"
+    container_name: ros-dnn
+    network_mode: "host"
+    privileged: true
+    depends_on:
+      - ros-realsense
+    command: /bin/bash -c "roslaunch --wait dnn_detect dnn_detect.launch camera:=/camera/color image:=image_raw"
+    restart: unless-stopped

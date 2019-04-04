@@ -22,9 +22,11 @@ while (( "$#" )); do
       ;;
     -r|--ros-distro)
       ROS_DISTRO="$1"
+      break
       ;;
     -d|--dir)
       DOCKER_DIR="$1"
+      break
       ;;
     --) # end argument parsing
       shift
@@ -49,7 +51,7 @@ function build_all {
     if [[ -d $FOLDERNAME ]]; then
       SUBFOLDER=$(basename "$FOLDERNAME")
       echo "[Building yuxianggao/${SUBFOLDER}:${ROS_DISTRO}-${ARCH}]"
-      eval "docker build -t yuxianggao/${SUBFOLDER}:${ROS_DISTRO}-${ARCH} --build-arg ROS_DISTRO=${ROS_DISTRO} dockers/${SUBFOLDER}"
+      eval "docker build -t yuxianggao/${SUBFOLDER}:${ROS_DISTRO}-${ARCH} --build-arg ROS_DISTRO=${ROS_DISTRO} --build-arg ARCH=${ARCH} dockers/${SUBFOLDER}"
       echo "[Pushing yuxianggao/${SUBFOLDER}:${ROS_DISTRO}-${ARCH}]"
       eval "docker push yuxianggao/${SUBFOLDER}:${ROS_DISTRO}-${ARCH}"
     fi
@@ -61,7 +63,7 @@ function build {
     SUBFOLDER=$(basename "$FOLDERNAME")
     if [[ ( -d $FOLDERNAME ) && ( $SUBFOLDER = $1) ]]; then
       echo "[Building yuxianggao/${SUBFOLDER}:${ROS_DISTRO}-${ARCH}]"
-      eval "docker build -t yuxianggao/${SUBFOLDER}:${ROS_DISTRO}-${ARCH} --build-arg ROS_DISTRO=${ROS_DISTRO} dockers/${SUBFOLDER}"
+      eval "docker build -t yuxianggao/${SUBFOLDER}:${ROS_DISTRO}-${ARCH} --build-arg ROS_DISTRO=${ROS_DISTRO} --build-arg ARCH=${ARCH} dockers/${SUBFOLDER}"
       echo "[Pushing yuxianggao/${SUBFOLDER}:${ROS_DISTRO}-${ARCH}]"
       eval "docker push yuxianggao/${SUBFOLDER}:${ROS_DISTRO}-${ARCH}"
     fi
@@ -70,7 +72,7 @@ function build {
 
 function main {
   echo "$1"
-  if [[ $PARAMS -eq 0 ]]; then
+  if [[ $# -eq 0 ]]; then
       echo "Building all"
       build_all
   else
@@ -82,5 +84,5 @@ function main {
   fi
 }
 
-main "$@"
+main $PARAMS
 # # docker run --rm weshigbee/manifest-tool push from-spec manifest.yaml

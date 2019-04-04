@@ -51,7 +51,7 @@ All dockers should reside in the `dockers` folder, and the packages should be cl
 
 ## Basic Usage
 ### Building
-We provide a build script for building and pushing images, usage:
+We provide a `build.sh` script for building and pushing images, usage:
 ```
 usage: ./build.sh image1 image2 ... imageN
 Give the images to build. If no image is given, all folders in /dockers will be built.
@@ -66,7 +66,23 @@ Examples:
 ./build.sh ros-gui ros-master #build specific images
 ./build.sh #build all 
 ```
+### Running
+We provide a `run.sh` script for launching images, usage:
+```
+usage:
+Give the images to build. If no image is given, all folders in /dockers will be built.
+Arguments:
+  -h|--help: Usage
+  -s|--start: Run dockers
+  -d|--detached: Run in detached mode (1: True, 0: False). Default: 1
+  -e|--end: Stop dockers
 
+```
+Examples:
+```
+./run.sh -s #start dockers
+./run.sh -e #end dockers
+```
 ## docker-ros-realsense 
 Docker for d415/d435 using ROS
 Dockerized ROS environment with Realsense support.

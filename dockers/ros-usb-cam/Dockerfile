@@ -1,10 +1,11 @@
+ARG ROS_DISTRO
 FROM ros:kinetic-robot
-ARG  ROS_VERSION=kinetic
+ARG  ROS_DISTRO=kinetic
 
 RUN apt-get update && apt-get install -y \
-    ros-${ROS_VERSION}-usb-cam \
-    ros-${ROS_VERSION}-uvc-camera \
-    ros-${ROS_VERSION}-compressed-image-transport &&\
+    ros-${ROS_DISTRO}-usb-cam \
+    ros-${ROS_DISTRO}-uvc-camera \
+    ros-${ROS_DISTRO}-compressed-image-transport &&\
     apt-get -y clean &&\
     apt-get -y purge &&\
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

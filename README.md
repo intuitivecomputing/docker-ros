@@ -69,18 +69,21 @@ Examples:
 ### Running
 We provide a `run.sh` script for launching images, usage:
 ```
-usage:
+Usage:
 Give the images to build. If no image is given, all folders in /dockers will be built.
 Arguments:
   -h|--help: Usage
   -s|--start: Run dockers
-  -d|--detached: Run in detached mode (1: True, 0: False). Default: 1
+  -b|--build: Start with build
+  -a|--attached: Run in attached mode to see output
   -e|--end: Stop dockers
 
 ```
 Examples:
 ```
 ./run.sh -s #start dockers
+./run.sh -s -b #build and start dockers
+./run.sh -s -a #start dockers in attached mode
 ./run.sh -e #end dockers
 ```
 ## docker-ros-realsense 

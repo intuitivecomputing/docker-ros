@@ -4,19 +4,19 @@ DOCKER_ROS_DISTRO="kinetic"
 DOCKER_ARCH="$(dpkg --print-architecture)"
 
 function usage {
-    echo "usage:"
+    echo "Usage:"
     echo "Give the images to build. If no image is given, all folders in /dockers will be built."
     echo "Arguments:"
     echo "  -h|--help: Usage"
     echo "  -s|--start: Run dockers"
-    echo "  -d|--detached: Run in detached mode (1: True, 0: False). Default: 1"
+    echo "  -b|--build: Start with build"
+    echo "  -a|--attached: Run in attached mode to see output"
     echo "  -e|--end: Stop dockers"
     exit 1
 }
 
 function start_detached {
   docker-compose up -d
-  exit 1
 }
 
 function start {
@@ -28,20 +28,26 @@ function end {
   exit 1
 }
 
+ATTACHED="0"
+
+
 PARAMS=""
 while (( "$#" )); do
-  echo "$1"
   case "$1" in
     -h|--help)
       usage
       ;;
     -s|--start)
-      RUN="1"
-      break
+      CMD="docker-compose up"
+      shift
       ;;
-    -d|--detached)
-      DETACHED="$1"
-      break
+    -b|--build)
+      CMD="$CMD --build"
+      shift
+      ;;
+    -a|--attached)
+      ATTACHED="1"
+      shift
       ;;
     -e|--end)
       end
@@ -65,18 +71,14 @@ done
 # set positional arguments in their proper place
 eval set -- "$PARAMS"
 
-
-
-echo "$RUN"
 function main {
-  if [[ ! -z $1 ]]; then
+  if [[ ! -z $CMD ]]; then
     echo "Starting docker-compile"
-    if [[ $2 = 0 ]]; then
-      start
-    else
-      start_detached
+    if [[ $1 = "0" ]]; then
+      CMD="$CMD -d"
     fi
   fi
+  eval "$CMD"
 }
 
-main $RUN $DETACHED
+main $ATTACHED

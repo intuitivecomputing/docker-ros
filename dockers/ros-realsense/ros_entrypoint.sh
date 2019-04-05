@@ -9,6 +9,7 @@ set -e
 # SETUP="/opt/ros/$ROS_DISTRO/setup.bash"
 if [ -z "${SETUP}" ]; then
     source "/catkin_ws/devel/setup.bash"
+    echo "source /catkin_ws/devel/setup.bash" >> $HOME/.bashrc
 else
     source $SETUP
 fi

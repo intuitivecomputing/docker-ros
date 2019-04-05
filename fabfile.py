@@ -40,7 +40,7 @@ def docker_exec(project_name, cmdline='/bin/bash'):
     :param project_name: project to build. Should be stripped of 'docker-ros' suffix
     :param cmdline: command to be executed
     """
-    local('docker exec -ti ros-{} {}'.format(project_name, cmdline))
+    local('docker exec -ti ros-{project_name} {cmdline}'.format(project_name=project_name, cmdline=cmdline))
 
 
 @task

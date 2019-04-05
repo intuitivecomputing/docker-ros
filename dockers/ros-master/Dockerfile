@@ -1,4 +1,4 @@
-ARG ROS_DISTRO
+ARG ROS_DISTRO=kinetic
 FROM ros:${ROS_DISTRO}-ros-core
 ARG ROS_DISTRO
 

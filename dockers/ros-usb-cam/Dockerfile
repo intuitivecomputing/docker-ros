@@ -1,4 +1,4 @@
-ARG ROS_DISTRO
+ARG ROS_DISTRO=kinetic
 FROM ros:kinetic-robot
 ARG  ROS_DISTRO=kinetic
 

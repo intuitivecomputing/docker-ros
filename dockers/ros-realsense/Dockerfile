@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 ARG ROS_DISTRO
 FROM ros:${ROS_DISTRO}-ros-core
+=======
+ARG ROS_DISTRO=kinetic
+FROM ros:${ROS_DISTRO}
+>>>>>>> df1db2389d41d6f275c855e6757b45bc9ee39aab
 
 ARG ROS_DISTRO
 ARG LIBREALSENSE_VERSION=2.19.2
@@ -13,29 +18,29 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 
 RUN apt update && \
-    apt install -qqy \
-    x11-apps \
-    tmux \
-    curl \
-    wget \
-    python-rosinstall \
-    python-catkin-tools \
-    ros-${ROS_DISTRO}-rgbd-launch \
-    ros-${ROS_DISTRO}-image-transport-plugins \
-    ros-${ROS_DISTRO}-image-transport && \
-    rm -rf /var/lib/apt/lists/*
+  apt install -qqy \
+  x11-apps \
+  tmux \
+  curl \
+  wget \
+  python-rosinstall \
+  python-catkin-tools \
+  ros-${ROS_DISTRO}-rgbd-launch \
+  ros-${ROS_DISTRO}-image-transport-plugins \
+  ros-${ROS_DISTRO}-image-transport && \
+  rm -rf /var/lib/apt/lists/*
 
 
 RUN wget https://github.com/IntelRealSense/librealsense/archive/v${LIBREALSENSE_VERSION}.tar.gz
 RUN tar xvzf v${LIBREALSENSE_VERSION}.tar.gz && \
-    mkdir -p librealsense-${LIBREALSENSE_VERSION}/build
+  mkdir -p librealsense-${LIBREALSENSE_VERSION}/build
 RUN apt update && \
-    apt install -y \
-        libusb-1.0-0 \
-        libusb-1.0-0-dev \
-        freeglut3-dev \
-        libgtk-3-dev \
-        libglfw3-dev
+  apt install -y \
+  libusb-1.0-0 \
+  libusb-1.0-0-dev \
+  freeglut3-dev \
+  libgtk-3-dev \
+  libglfw3-dev
 
 RUN cd librealsense-${LIBREALSENSE_VERSION}/build; cmake ..
 RUN cd librealsense-${LIBREALSENSE_VERSION}/build; make -j4; make install

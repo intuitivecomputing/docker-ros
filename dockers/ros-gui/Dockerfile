@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ARG ROS_DISTRO
+=======
+ARG ROS_DISTRO=kinetic
+>>>>>>> df1db2389d41d6f275c855e6757b45bc9ee39aab
 FROM ros:${ROS_DISTRO}-ros-core
 ARG ROS_DISTRO
 

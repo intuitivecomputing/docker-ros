@@ -15,13 +15,6 @@ function usage {
     exit 1
 }
 
-function start_detached {
-  docker-compose up -d
-}
-
-function start {
-  docker-compose up
-}
 
 function end {
   docker-compose down

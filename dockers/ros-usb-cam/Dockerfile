@@ -1,10 +1,8 @@
-<<<<<<< HEAD
 
-=======
 ARG ROS_DISTRO=kinetic
 FROM ros:${ROS_DISTRO}-robot
 ARG  ROS_DISTRO
->>>>>>> df1db2389d41d6f275c855e6757b45bc9ee39aab
+
 
 RUN apt-get update && apt-get install -y \
     ros-${ROS_DISTRO}-usb-cam \

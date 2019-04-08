@@ -1,8 +1,7 @@
 ARG ROS_DISTRO
-ARG ARCH
 FROM ros:${ROS_DISTRO}-ros-core
 ARG ROS_DISTRO
-ARG ARCH
+
 LABEL maintainer="Yuxiang Gao ygao73@jhu.edu.com"
 
 VOLUME [ "/dev", "/tmp/.X11-unix", "$HOME/.Xauthority" ]

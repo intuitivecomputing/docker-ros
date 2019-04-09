@@ -8,4 +8,7 @@ set -e
 # setup ros environment
 source "/opt/ros/$ROS_DISTRO/setup.bash"
 echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> $HOME/.bashrc
+
+# http://wiki.ros.org/ROS/NetworkSetup
+# echo "server S{chrony-server} minpoll 0 maxpoll 5 maxdelay .05" >> /etc/chrony/chrony.conf
 exec "$@"

@@ -12,6 +12,7 @@ RUN apt-get update && \
     wget \
     git \
     vim \
+    chrony \
     python-rosinstall \
     python-catkin-tools && \
     apt-get upgrade -y && \

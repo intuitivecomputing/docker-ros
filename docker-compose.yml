@@ -7,10 +7,14 @@ services:
       context: dockers/ros-master
       args:
         ROS_DISTRO: "$DOCKER_ROS_DISTRO"
-        ARCH: "$DOCKER_ARCH"
+        # ARCH: "$DOCKER_ARCH"
     container_name: ros-master
     network_mode: "host"
     privileged: true
+    # Map volumes to sync time with the host
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
     restart: always
 
   ros-realsense:
@@ -19,7 +23,7 @@ services:
       context: dockers/ros-realsense
       args:
         ROS_DISTRO: "$DOCKER_ROS_DISTRO"
-        ARCH: "$DOCKER_ARCH"
+        # ARCH: "$DOCKER_ARCH"
     container_name: ros-realsense
     privileged: true
     depends_on:
@@ -34,7 +38,7 @@ services:
       context: dockers/ros-gui
       args:
         ROS_DISTRO: "$DOCKER_ROS_DISTRO"
-        ARCH: "$DOCKER_ARCH"
+        # ARCH: "$DOCKER_ARCH"
     container_name: ros-gui
     network_mode: "host"
     privileged: true
@@ -49,7 +53,7 @@ services:
       context: dockers/ros-dnn
       args:
         ROS_DISTRO: "$DOCKER_ROS_DISTRO"
-        ARCH: "$DOCKER_ARCH"
+        # ARCH: "$DOCKER_ARCH"
     container_name: ros-dnn
     network_mode: "host"
     privileged: true

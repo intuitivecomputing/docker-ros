@@ -30,6 +30,12 @@ pip install Fabric3
 #or
 sudo apt install fabric
 ```
+6. Expose GPU to docker
+```bash
+cp txdocker /usr/local/bin/
+chmod +x /usr/local/bin/txdocker
+```
+And use it as docker command.
 
 ## Conventions
 The directory should look like this

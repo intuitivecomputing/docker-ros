@@ -11,8 +11,6 @@ VOLUME [ "/dev:/dev" ]
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-
-
 RUN apt update && \
   apt install -qqy \
   x11-apps \

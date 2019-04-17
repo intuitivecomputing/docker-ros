@@ -10,4 +10,5 @@ RUN apt-get update && apt-get install -y \
     apt-get -y purge &&\
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+
 # CMD ["roslaunch", "--wait", "dnn_detect", "dnn_detect.launch", "camera:=/usb_cam", "image:=image_raw" ]

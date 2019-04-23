@@ -26,6 +26,8 @@ services:
         # ARCH: "$DOCKER_ARCH"
     container_name: ros-realsense
     privileged: true
+    volume:
+        - /dev
     #   depends_on:
     #  - ros-master
     network_mode: "host"

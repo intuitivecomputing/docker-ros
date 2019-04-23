@@ -1,4 +1,4 @@
-ARG ROS_DISTRO=kinetic
+ARG ROS_DISTRO=melodic
 FROM ros:${ROS_DISTRO}-ros-core
 ARG ROS_DISTRO
 

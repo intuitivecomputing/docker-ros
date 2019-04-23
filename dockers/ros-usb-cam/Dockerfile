@@ -1,5 +1,5 @@
 
-ARG ROS_DISTRO=kinetic
+ARG ROS_DISTRO=melodic
 FROM ros:${ROS_DISTRO}-robot
 ARG  ROS_DISTRO
 

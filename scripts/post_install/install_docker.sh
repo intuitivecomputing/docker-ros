@@ -4,7 +4,7 @@ set -ax
 function install_docker {
     sudo apt-get remove docker docker-engine docker.io containerd runc
     sudo apt-get update
-    sudo apt-get install \
+    sudo apt-get install -qqy\
                 apt-transport-https \
                 ca-certificates \
                 curl \
@@ -17,14 +17,14 @@ function install_docker {
         $(lsb_release -cs) \
         stable"
     sudo apt-get update
-    sudo apt-get install docker-ce docker-ce-cli containerd.io
+    sudo apt-get install -qqy docker-ce docker-ce-cli containerd.io
     sudo usermod -aG docker ${USER}
 }
 
 function install_docker_compose {
-    sudo apt-get install -y libffi-dev python-openssl
+    sudo apt-get install -qqy libffi-dev python-openssl
     curl -sSL https://bootstrap.pypa.io/get-pip.py | sudo python
-    sudo pip install docker-compose
+    pip install docker-compose
 }
 
 function main {
@@ -34,4 +34,4 @@ function main {
     sudo shutdown -r now
 }
 
-main
+# main

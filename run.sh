@@ -1,7 +1,7 @@
 #!/bin/bash
 set -a
-DOCKER_ROS_DISTRO="kinetic"
-DOCKER_ARCH="$(dpkg --print-architecture)"
+# DOCKER_ROS_DISTRO="melodic"
+# DOCKER_ARCH="$(dpkg --print-architecture)"
 
 function usage {
     echo "Usage:"

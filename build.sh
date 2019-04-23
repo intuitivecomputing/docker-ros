@@ -10,8 +10,8 @@ function usage {
     exit 1
 }
 
-ARCH=$(dpkg --print-architecture)
-ROS_DISTRO="kinetic"
+# DOCKER_ARCH=$(dpkg --print-architecture)
+# DOCKER_ROS_DISTRO="melodic"
 DOCKER_DIR="dockers"
 
 PARAMS=""
@@ -21,7 +21,7 @@ while (( "$#" )); do
       usage
       ;;
     -r|--ros-distro)
-      ROS_DISTRO="$1"
+      DOCKER_ROS_DISTRO="$1"
       break
       ;;
     -d|--dir)
@@ -50,10 +50,10 @@ function build_all {
   for FOLDERNAME in $DOCKER_DIR/*; do
     if [[ -d $FOLDERNAME ]]; then
       SUBFOLDER=$(basename "$FOLDERNAME")
-      echo "[Building yuxianggao/${SUBFOLDER}:${ROS_DISTRO}-${ARCH}]"
-      eval "docker build -t yuxianggao/${SUBFOLDER}:${ROS_DISTRO}-${ARCH} --build-arg ROS_DISTRO=${ROS_DISTRO} --build-arg ARCH=${ARCH} dockers/${SUBFOLDER}"
-      echo "[Pushing yuxianggao/${SUBFOLDER}:${ROS_DISTRO}-${ARCH}]"
-      eval "docker push yuxianggao/${SUBFOLDER}:${ROS_DISTRO}-${ARCH}"
+      echo "[Building yuxianggao/${SUBFOLDER}:${DOCKER_ROS_DISTRO}-${DOCKER_ARCH}]"
+      eval "docker build -t yuxianggao/${SUBFOLDER}:${DOCKER_ROS_DISTRO}-${DOCKER_ARCH} --build-arg DOCKER_ROS_DISTRO=${DOCKER_ROS_DISTRO} --build-arg DOCKER_ARCH=${DOCKER_ARCH} dockers/${SUBFOLDER}"
+      echo "[Pushing yuxianggao/${SUBFOLDER}:${DOCKER_ROS_DISTRO}-${DOCKER_ARCH}]"
+      eval "docker push yuxianggao/${SUBFOLDER}:${DOCKER_ROS_DISTRO}-${DOCKER_ARCH}"
     fi
   done
 }
@@ -62,10 +62,10 @@ function build {
   for FOLDERNAME in $(basename "$DOCKER_DIR")/*; do
     SUBFOLDER=$(basename "$FOLDERNAME")
     if [[ ( -d $FOLDERNAME ) && ( $SUBFOLDER = $1) ]]; then
-      echo "[Building yuxianggao/${SUBFOLDER}:${ROS_DISTRO}-${ARCH}]"
-      eval "docker build -t yuxianggao/${SUBFOLDER}:${ROS_DISTRO}-${ARCH} --build-arg ROS_DISTRO=${ROS_DISTRO} --build-arg ARCH=${ARCH} dockers/${SUBFOLDER}"
-      echo "[Pushing yuxianggao/${SUBFOLDER}:${ROS_DISTRO}-${ARCH}]"
-      eval "docker push yuxianggao/${SUBFOLDER}:${ROS_DISTRO}-${ARCH}"
+      echo "[Building yuxianggao/${SUBFOLDER}:${DOCKER_ROS_DISTRO}-${DOCKER_ARCH}]"
+      eval "docker build -t yuxianggao/${SUBFOLDER}:${DOCKER_ROS_DISTRO}-${DOCKER_ARCH} --build-arg DOCKER_ROS_DISTRO=${DOCKER_ROS_DISTRO} --build-arg DOCKER_ARCH=${DOCKER_ARCH} dockers/${SUBFOLDER}"
+      echo "[Pushing yuxianggao/${SUBFOLDER}:${DOCKER_ROS_DISTRO}-${DOCKER_ARCH}]"
+      eval "docker push yuxianggao/${SUBFOLDER}:${DOCKER_ROS_DISTRO}-${DOCKER_ARCH}"
     fi
   done
 }

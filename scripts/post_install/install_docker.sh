@@ -33,3 +33,5 @@ function main {
     sudo docker run --rm -it arm64v8/ubuntu:16.04 cat /etc/issue
     sudo shutdown -r now
 }
+
+main

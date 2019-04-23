@@ -1,41 +1,20 @@
 # Dockers for ROS
 ## Prerequisites 
-1. Install Docker Engine and Docker Compose using `script/post_install/install_docker.sh`
-2. If you are running this on a Raspberry Pi, you need to [add swap](https://github.com/IntelRealSense/librealsense/blob/master/doc/installation_raspbian.md) for building `librealsense`:
-
-Initial value is 100MB, but we need to build libraries so initial value isn't enough for that. In this case, need to switch from 100 to 2048 (2GB).
-
-```
-$ sudo vim /etc/dphys-swapfile
-CONF_SWAPSIZE=2048
-
-$ sudo /etc/init.d/dphys-swapfile restart swapon -s
-```
-
-3. [Use docker without sudo](https://askubuntu.com/questions/477551/how-can-i-use-docker-without-sudo)
-
-4. [Fix broken docker-compose](https://www.tomhanoldt.info/blog/dev/docker/docker-on-raspberry-with-gui/)
-As docker-compose makes things more reproducable but is broken in the actual hypriot image, we will fix this by typing this in to the raspberry terminal:
-```
-sudo easy_install --upgrade pip
-sudo pip uninstall docker docker-compose -y
-
-sudo pip install requests==2.20.1
-sudo pip install docker==3.7.2
-sudo pip install docker-compose==1.23.0
-```
-5. We use `Fabric` to streamline build and development, to install `Fabric`:
+Run `script/post_install/setup.sh`. It does three things:
+1. We use `Fabric` to streamline build and development, to install `Fabric`:
 ```
 pip install Fabric3
 #or
 sudo apt install fabric
 ```
-6. Expose GPU to docker
+2. Expose GPU to docker
 ```bash
 cp txdocker /usr/local/bin/
 chmod +x /usr/local/bin/txdocker
 ```
 And use it as docker command.
+
+3. Install Docker Engine and Docker Compose
 
 ## Conventions
 The directory should look like this

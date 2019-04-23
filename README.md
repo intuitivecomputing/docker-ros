@@ -1,6 +1,6 @@
 # Dockers for ROS
 ## Prerequisites 
-1. Install Docker Engine and Docker Compose
+1. Install Docker Engine and Docker Compose using `script/post_install/install_docker.sh`
 2. If you are running this on a Raspberry Pi, you need to [add swap](https://github.com/IntelRealSense/librealsense/blob/master/doc/installation_raspbian.md) for building `librealsense`:
 
 Initial value is 100MB, but we need to build libraries so initial value isn't enough for that. In this case, need to switch from 100 to 2048 (2GB).

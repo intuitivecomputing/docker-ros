@@ -1,17 +1,16 @@
 
-ARG ROS_DISTRO=melodic
-FROM ros:${ROS_DISTRO}-ros-core
+ARG ROS_DISTRO
+FROM ros:${ROS_DISTRO}-ros-base
 
 ARG ROS_DISTRO
-ARG LIBREALSENSE_VERSION=2.19.2
+ARG LIBREALSENSE_VERSION=2.21.0
 
 LABEL maintainer="Yuxiang Gao ygao73@jhu.edu.com"
-
-VOLUME [ "/dev:/dev" ]
 
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt update && \
+  apt -y upgrade && apt -y dist-upgrade && \
   apt install -qqy \
   x11-apps \
   tmux \
@@ -21,22 +20,29 @@ RUN apt update && \
   python-catkin-tools \
   ros-${ROS_DISTRO}-rgbd-launch \
   ros-${ROS_DISTRO}-image-transport-plugins \
-  ros-${ROS_DISTRO}-image-transport && \
+  ros-${ROS_DISTRO}-image-transport \
+  ros-${ROS_DISTRO}-tf \
+  ros-${ROS_DISTRO}-diagnostic-updater \
+  libusb-1.0-0 \
+  libusb-1.0-0-dev \
+  freeglut3-dev \
+  libgtk-3-dev \
+  libglfw3-dev \
+  libssl-dev \
+  pkg-config \
+  libgl1-mesa-dev \
+  libglu1-mesa-dev \
+  libhidapi-libusb0 \
+  libturbojpeg \
+  libncurses5-dev &&\
   rm -rf /var/lib/apt/lists/*
 
 
 RUN wget https://github.com/IntelRealSense/librealsense/archive/v${LIBREALSENSE_VERSION}.tar.gz
 RUN tar xvzf v${LIBREALSENSE_VERSION}.tar.gz && \
   mkdir -p librealsense-${LIBREALSENSE_VERSION}/build
-RUN apt update && \
-  apt install -y \
-  libusb-1.0-0 \
-  libusb-1.0-0-dev \
-  freeglut3-dev \
-  libgtk-3-dev \
-  libglfw3-dev
-
-RUN cd librealsense-${LIBREALSENSE_VERSION}/build; cmake ..
+  
+RUN cd librealsense-${LIBREALSENSE_VERSION}/build; cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=false -DBUILD_GRAPHICAL_EXAMPLES=false
 RUN cd librealsense-${LIBREALSENSE_VERSION}/build; make -j4; make install
 
 RUN mv /bin/sh /bin/sh_tmp && ln -s /bin/bash /bin/sh
@@ -47,6 +53,7 @@ RUN cd catkin_ws; rosdep install -r -y --from-paths src --ignore-src
 
 RUN source /opt/ros/${ROS_DISTRO}/setup.bash; cd catkin_ws; catkin build
 
+# RUN apt -y install python3-catkin-pkg
 # RUN touch /root/.bashrc && \
 #     # machine_ip=(`hostname -I`) && \
 #     # echo "export ROS_IP=${machine_ip[0]}" >> /root/.bashrc && \

@@ -44,7 +44,17 @@ services:
     privileged: true
     depends_on:
       - ros-realsense
-    command: /bin/bash -c "rviz"
+    volumes:
+      #- /dev
+      - /etc/group:/etc/group:ro
+      - /etc/passwd:/etc/passwd:ro
+      - /etc/shadow:/etc/shadow:ro
+      - /etc/sudoers.d:/etc/sudoers.d:ro
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - $HOME/.Xauthority:/root/.Xauthority:rw
+    environment:
+      - "DISPLAY"
+    command: /bin/bash -c "rqt"
     restart: unless-stopped
 
   ros-dnn:

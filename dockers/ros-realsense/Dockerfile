@@ -7,15 +7,11 @@ ARG LIBREALSENSE_VERSION=2.19.2
 
 LABEL maintainer="Yuxiang Gao ygao73@jhu.edu.com"
 
-VOLUME [ "/dev:/dev" ]
-
 ENV DEBIAN_FRONTEND=noninteractive
-
-
 
 RUN apt update && \
   apt install -qqy \
-  x11-apps \
+  # x11-apps \
   tmux \
   curl \
   wget \

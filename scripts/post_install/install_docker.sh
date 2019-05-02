@@ -2,7 +2,7 @@
 set -ax
 
 function install_docker {
-    sudo apt-get remove docker docker-engine docker.io containerd runc
+    sudo apt-get remove -y docker docker-engine docker.io containerd runc
     sudo apt-get update
     sudo apt-get install -qqy\
                 apt-transport-https \
@@ -24,7 +24,7 @@ function install_docker {
 function install_docker_compose {
     sudo apt-get install -qqy libffi-dev python-openssl
     curl -sSL https://bootstrap.pypa.io/get-pip.py | sudo python
-    pip install docker-compose
+    pip install --user docker-compose
 }
 
 function main {

@@ -42,7 +42,7 @@ RUN wget https://github.com/IntelRealSense/librealsense/archive/v${LIBREALSENSE_
 RUN tar xvzf v${LIBREALSENSE_VERSION}.tar.gz && \
   mkdir -p librealsense-${LIBREALSENSE_VERSION}/build
   
-RUN cd librealsense-${LIBREALSENSE_VERSION}/build; cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=false -DBUILD_GRAPHICAL_EXAMPLES=false
+RUN cd librealsense-${LIBREALSENSE_VERSION}/build; cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=false -DBUILD_GRAPHICAL_EXAMPLES=false #-BUILD_WITH_CUDA=true
 RUN cd librealsense-${LIBREALSENSE_VERSION}/build; make -j4; make install
 
 RUN mv /bin/sh /bin/sh_tmp && ln -s /bin/bash /bin/sh

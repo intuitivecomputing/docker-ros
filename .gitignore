@@ -1,3 +1,4 @@
 .vscode
 .buildconfig
 *.pyc
+scripts/post_install/tmp

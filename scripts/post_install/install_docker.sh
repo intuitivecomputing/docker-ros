@@ -32,7 +32,7 @@ function main {
     install_docker
     install_docker_compose
     sudo docker run --rm -it arm64v8/ubuntu:16.04 cat /etc/issue
-    sudo shutdown -r now
+    # sudo shutdown -r now
 }
 
 # main

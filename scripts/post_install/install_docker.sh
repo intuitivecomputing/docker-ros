@@ -23,9 +23,8 @@ function install_docker {
 
 function install_docker_compose {
     sudo apt-get install -qqy libffi-dev python-openssl python-pip
-    sudo pip uninstall docker-compose
     #curl -sSL https://bootstrap.pypa.io/get-pip.py | sudo python
-    sudo pip install docker-compose
+    sudo pip install -U docker-compose
 }
 
 function main {

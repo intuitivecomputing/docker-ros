@@ -1,0 +1,36 @@
+version: '3.7'
+
+services:
+  ros-realsense:
+    image: yuxianggao/ros-realsense:kinetic-arm64
+    environment:
+      - ROS_IP
+      - ROS_MASTER_URI
+    build:
+      context: dockers/ros-realsense
+      args:
+        ROS_DISTRO: kinetic
+    container_name: ros-realsense
+    privileged: true
+    network_mode: "host"
+    command: /bin/bash -c "roslaunch --wait realsense2_camera rs_rgbd.launch initial_reset:=true"
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    restart: unless-stopped
+
+  ros-zedm:
+    image: anniemao/ros-zedm:melodic-arm64v8
+    environment:
+      - ROS_IP
+      - ROS_MASTER_URI
+    build:
+      context: dockers/ros-zedm
+    container_name: ros-zedm
+    privileged: true
+    network_mode: "host"
+    command: /bin/bash -c "catkin_make"
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    restart: unless-stopped

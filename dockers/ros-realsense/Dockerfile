@@ -3,7 +3,8 @@ ARG ROS_DISTRO=kinetic
 FROM ros:${ROS_DISTRO}-ros-core
 
 ARG ROS_DISTRO
-ARG LIBREALSENSE_VERSION=2.19.2
+ARG LIBREALSENSE_VERSION=2.25.0
+ARG ROSREALSENSE_VERSION=2.2.8
 
 LABEL maintainer="Yuxiang Gao ygao73@jhu.edu.com"
 
@@ -39,7 +40,7 @@ RUN cd librealsense-${LIBREALSENSE_VERSION}/build; make -j4; make install
 
 RUN mv /bin/sh /bin/sh_tmp && ln -s /bin/bash /bin/sh
 RUN mkdir -p /catkin_ws/src && cd /catkin_ws/src && \
-  git clone --depth 1 https://github.com/intel-ros/realsense
+  git clone --depth 1 --branch ${ROSREALSENSE_VERSION} https://github.com/intel-ros/realsense
 RUN cd catkin_ws; rosdep install -r -y --from-paths src --ignore-src
 
 

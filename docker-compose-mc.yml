@@ -29,7 +29,7 @@ services:
     container_name: ros-zedm
     privileged: true
     network_mode: "host"
-    command: /bin/bash -c "catkin_make"
+    command: /bin/bash -c "roslaunch --wait zed_wrapper zedm.launch"
     volumes:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
